@@ -2,12 +2,12 @@
 
 Each call to `ResearchAgent.ask()` runs this loop:
 
-1. Send the conversation to Claude (streamed, so text appears as it is written).
-2. Claude may use server tools (web search / web fetch) inside the same turn -
-   Anthropic runs those, and the results come back in the response.
-3. If Claude calls a client tool (save_report), we run it locally and send the
-   result back.
-4. Repeat until Claude gives a final answer with no more tool calls.
+1. Send the conversation to the model (streamed, so text appears as it is written).
+2. The model may use server tools (web search / web fetch) inside the same
+   turn - the API provider runs those, and the results come back in the response.
+3. If the model calls a client tool (save_report), we run it locally and send
+   the result back.
+4. Repeat until the model gives a final answer with no more tool calls.
 """
 
 from __future__ import annotations
@@ -86,7 +86,7 @@ class ResearchAgent:
     # --------------------------------------------------------------- the loop
 
     def ask(self, question: str) -> str:
-        """Research `question` and return Claude's final answer text.
+        """Research `question` and return the final answer text.
 
         The conversation is kept, so follow-up questions have context.
         """
@@ -199,7 +199,7 @@ class ResearchAgent:
         for block in tool_uses:
             text, is_error = run_client_tool(block.name, block.input, self.config.reports_dir)
             if is_error and "invalid input" in text:
-                # Echo what we received so Claude can correct itself.
+                # Echo what we received so the model can correct itself.
                 text = json.dumps({"INVALID_INPUT": text, "received": str(block.input)[:500]})
             self.output(f"[{block.name}] {text}\n")
             results.append(

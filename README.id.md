@@ -17,27 +17,27 @@ $ research-agent "Bagaimana industri nikel Indonesia memengaruhi harga baterai m
 
 ## Fitur
 
-- **Agent loop otomatis.** Claude sendiri yang memutuskan apa yang dicari, halaman mana yang dibuka, dan kapan informasinya sudah cukup.
+- **Agent loop otomatis.** Agent sendiri yang memutuskan apa yang dicari, halaman mana yang dibuka, dan kapan informasinya sudah cukup.
 - **Web search dan web fetch** sebagai server tool. Tidak perlu API key tambahan untuk pencarian.
 - **Tool lokal** (`save_report`) yang menyimpan laporan ke folder `reports/`. Nama file dibersihkan, jadi model tidak bisa menulis ke folder lain.
 - **Output streaming.** Jawaban dan setiap pencarian langsung terlihat saat sedang berjalan.
 - **Pertanyaan lanjutan** di mode interaktif. Konteks percakapan tetap tersimpan.
 - **Prompt caching** supaya riset bertahap lebih hemat biaya.
-- **Fallback otomatis** di sisi server kalau model utama menolak permintaan.
+- **Fallback otomatis** ke model lain kalau permintaan ditolak.
 - Menjawab dalam bahasa yang Anda pakai.
 
 ## Cara kerja
 
 Inti agent ada di [`research_agent/agent.py`](research_agent/agent.py):
 
-1. Percakapan dikirim ke Claude secara streaming.
-2. Server tool (search / fetch) dijalankan oleh Anthropic dalam giliran yang sama.
-3. Kalau Claude memanggil `save_report`, input dicek dulu, lalu tool dijalankan di komputer Anda dan hasilnya dikirim balik.
-4. Langkah ini diulang sampai Claude memberi jawaban akhir, dengan batas maksimal jumlah giliran.
+1. Percakapan dikirim ke model AI secara streaming.
+2. Server tool (search / fetch) dijalankan di sisi server dalam giliran yang sama.
+3. Kalau model memanggil `save_report`, input dicek dulu, lalu tool dijalankan di komputer Anda dan hasilnya dikirim balik.
+4. Langkah ini diulang sampai model memberi jawaban akhir, dengan batas maksimal jumlah giliran.
 
 ## Mulai
 
-**Kebutuhan:** Python 3.10+ dan [API key Anthropic](https://console.anthropic.com/).
+**Kebutuhan:** Python 3.10+ dan API key dari [console.anthropic.com](https://console.anthropic.com/).
 
 ```bash
 git clone https://github.com/alhafidzoktavir/research-agent.git
@@ -47,7 +47,7 @@ python -m venv .venv
 pip install -e .
 ```
 
-Salin `.env.example` menjadi `.env`, lalu isi `ANTHROPIC_API_KEY`. **Jangan pernah commit file `.env`** (file ini sudah ada di `.gitignore`).
+Salin `.env.example` menjadi `.env`, lalu isi API key Anda. **Jangan pernah commit file `.env`** (file ini sudah ada di `.gitignore`).
 
 ## Penggunaan
 

@@ -1,6 +1,6 @@
 """Client-side tools: tools that run on *your* machine.
 
-Web search and web fetch are server tools - they run on Anthropic's
+Web search and web fetch are server tools - they run on the API provider's
 infrastructure, so there is nothing to implement for them here. The only
 local tool is `save_report`, which writes the finished report to disk.
 """

@@ -21,21 +21,21 @@ EXIT_COMMANDS = {"exit", "quit", "q", ":q"}
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="research-agent",
-        description="A web research assistant powered by Claude.",
+        description="An AI web research assistant.",
     )
     parser.add_argument("question", nargs="*", help="Question to research (omit for interactive mode).")
-    parser.add_argument("--model", default=DEFAULT_MODEL, help=f"Claude model (default: {DEFAULT_MODEL}).")
+    parser.add_argument("--model", default=DEFAULT_MODEL, help=f"Model ID (default: {DEFAULT_MODEL}).")
     parser.add_argument(
         "--effort",
         default="high",
         choices=["low", "medium", "high", "xhigh", "max"],
-        help="How hard Claude thinks; higher is more thorough and costs more (default: high).",
+        help="How hard the model thinks; higher is more thorough and costs more (default: high).",
     )
     parser.add_argument("--max-searches", type=int, default=8, help="Web searches allowed per request (default: 8).")
     parser.add_argument("--max-fetches", type=int, default=6, help="Pages fetched per request (default: 6).")
     parser.add_argument("--reports-dir", type=Path, default=Path("reports"), help="Where reports are saved.")
     parser.add_argument("--no-save", action="store_true", help="Do not save reports to disk.")
-    parser.add_argument("--show-thinking", action="store_true", help="Print a summary of Claude's reasoning.")
+    parser.add_argument("--show-thinking", action="store_true", help="Print a summary of the model's reasoning.")
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     return parser.parse_args(argv)
 
@@ -99,8 +99,7 @@ def main(argv: list[str] | None = None) -> int:
         return 130
     except anthropic.AuthenticationError:
         print(
-            "\nAuthentication failed. Set ANTHROPIC_API_KEY (see .env.example) "
-            "or run `ant auth login`.",
+            "\nAuthentication failed. Set ANTHROPIC_API_KEY (see .env.example).",
             file=sys.stderr,
         )
         return 1
@@ -111,7 +110,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"\nAPI error ({exc.status_code}): {exc.message}", file=sys.stderr)
         return 1
     except anthropic.APIConnectionError:
-        print("\nCould not reach the Anthropic API. Check your internet connection.", file=sys.stderr)
+        print("\nCould not reach the API. Check your internet connection.", file=sys.stderr)
         return 1
 
 

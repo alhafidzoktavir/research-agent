@@ -1,4 +1,4 @@
-"""Research Agent - a web research assistant built on the Claude API."""
+"""Research Agent - an AI web research assistant."""
 
 from .agent import AgentConfig, ResearchAgent
 
