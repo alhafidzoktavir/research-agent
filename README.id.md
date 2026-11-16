@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-**Asisten riset AI** berbasis command-line yang dibangun dengan [Claude API](https://platform.claude.com/docs).
+**Asisten riset AI** berbasis command-line.
 Ajukan pertanyaan, lalu agent akan merencanakan riset, mencari di web, membaca halaman yang paling relevan,
 membandingkan sumber, dan menulis jawaban lengkap dengan sumbernya. Jawaban yang panjang juga disimpan sebagai laporan Markdown.
 
